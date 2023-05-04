@@ -1,2 +1,2 @@
-python3 centrinventory/manage.py makemigrations inventory
-python3 centrinventory/manage.py migrate
+python3 manage.py makemigrations inventory
+python3 manage.py migrate

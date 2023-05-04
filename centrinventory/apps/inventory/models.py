@@ -10,7 +10,7 @@ class Article(models.Model):
     description = models.TextField(max_length=500)
     price = models.FloatField()
     vat = models.FloatField()
-    creation_date = models.DateField(auto_created=True)
+    creation_date = models.DateField(auto_now_add=True, null=True, blank=True)
     stock = models.IntegerField()
 
 
