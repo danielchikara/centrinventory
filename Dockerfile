@@ -10,3 +10,6 @@ WORKDIR /code
 
 EXPOSE 8000
 
+ENTRYPOINT [ "python3" ,"centrinventory/manage.py" ]
+CMD [ "runserver","0.0.0.0:8000" ]
+
