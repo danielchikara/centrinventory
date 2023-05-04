@@ -1,0 +1,5 @@
+centrinventory/apps/inventory/__pycache__/*
+centrinventory/db.sqlite3
+centrinventory/apps/inventory/migrations/__pycache__/*
+envctb/*
+centrinventory/centrinventory/__pycache__/*
