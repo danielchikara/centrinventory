@@ -17,7 +17,7 @@ https://www.db4free.net/
 ![alt text](https://4096122335-files.gitbook.io/~/files/v0/b/gitbook-legacy-files/o/spaces%2F-M25eE8ddpsYLEnGsGVW%2Favatar-1587573693529.png?generation=1587573693986865&alt=media)
 
 
-https://hub.docker.com/layers/danielchikara/djangocentrinventory/v1/images/sha256:b7f1eb18a87e4093390fa91e3fddb3a267ab03868dea1d929ebd6cced20be2d0?tab=layers
+https://hub.docker.com/r/danielchikara/djangocentrinventory/tags
 
 ```
 docker run -it -p 8000:8000 django-cntrinventory
