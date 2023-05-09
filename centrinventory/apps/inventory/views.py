@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
-from apps.inventory.serializers import ArticleSerializer
+from apps.inventory.serializers import *
 from apps.inventory.models import *
 
 
@@ -21,3 +21,7 @@ class ListArticle(generics.ListAPIView):
 class RetrieveArticle(generics.RetrieveAPIView):
     serializer_class = ArticleSerializer 
     queryset = Article.objects.all()
+    
+class CreateOrder (generics.CreateAPIView):
+    serializer_class = OrderingSerializer
+    

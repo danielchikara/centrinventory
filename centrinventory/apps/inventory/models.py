@@ -15,9 +15,7 @@ class Article(models.Model):
 
 
 class Ordering(models.Model):
-    total_price = models.FloatField()
-    total_price_vta = models.FloatField()
-    creation_date = models.DateField(auto_created=True)
+    creation_date = models.DateField(auto_now_add=True, null=True, blank=True)
 
 
 class OrderingArticle(models.Model):
@@ -25,4 +23,15 @@ class OrderingArticle(models.Model):
         Ordering, related_name="ordering_articles", on_delete=models.CASCADE)
     article = models.ForeignKey(
         Article, related_name="article_orders", on_delete=models.CASCADE)
-    cant = models.IntegerField()
+    amount = models.IntegerField()
+    total_price = models.FloatField(null=True, blank=True)
+    total_price_vat = models.FloatField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        article = self.article
+        total = self.article.stock - self.amount
+        if total < 0:
+            ValueError
+        else:
+            self.article.stock = total
+        super(OrderingArticle,self).save(*args, **kwargs)
