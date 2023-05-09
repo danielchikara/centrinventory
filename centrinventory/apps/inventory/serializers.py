@@ -27,18 +27,45 @@ class OrderingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ordering
         exclude = ('creation_date',)
+        
+    def validate(self, data):
+        articles = data.get('ordering_articles')
+        for article in articles:
+            article_obj = article.get('article')
+            amount = article.get('amount')
+            if article_obj.stock < amount:
+                raise serializers.ValidationError(f"There is not enough stock for the product {article_obj.name}")
+            
+        return super().validate(data)
 
     def create(self, validated_data):
         articles = validated_data.pop('ordering_articles')
         order = super().create(validated_data)
         for article in articles:
+            article_obj = article['article']
             total_price = self.total_price(
-                article['amount'], article['article'].price)
+                article['amount'], article_obj.price)
             total_price_vat = self.vat(
-                total_price, article['article'].vat)+total_price
+                total_price, article_obj.vat)+total_price
             OrderingArticle.objects.create(
                 ordering=order, total_price=total_price, total_price_vat=total_price_vat, **article)
+            article_obj.save()
         return order
+    
+    def update(self, instance, validated_data):
+        articles = validated_data.pop('ordering_articles')
+        instance = super().update(instance, validated_data)
+        OrderingArticle.objects.filter(ordering=instance).delete()
+        for article in articles:
+            article_obj = article['article']
+            total_price = self.total_price(
+                article['amount'], article_obj.price)
+            total_price_vat = self.vat(
+                total_price, article_obj.vat)+total_price
+            OrderingArticle.objects.create(
+                ordering=instance, total_price=total_price, total_price_vat=total_price_vat, **article)
+            article_obj.save()
+        return instance
 
     def total_price(self, amount, price):
         return amount * price

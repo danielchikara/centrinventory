@@ -24,4 +24,7 @@ class RetrieveArticle(generics.RetrieveAPIView):
     
 class CreateOrder (generics.CreateAPIView):
     serializer_class = OrderingSerializer
-    
+
+class UpdateOrder(generics.UpdateAPIView):
+    queryset = Ordering.objects.all()
+    serializer_class = OrderingSerializer
